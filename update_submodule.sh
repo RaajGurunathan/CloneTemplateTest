@@ -1,4 +1,5 @@
 #!/bin/bash
+(
 cd e/Git/Project
 git submodule foreach --recursive
 cd Core
@@ -18,3 +19,4 @@ else
 fi
 cd e/Git/Project
 read -rp "Press Enter to Exit..."
+)
