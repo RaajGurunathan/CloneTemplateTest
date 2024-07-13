@@ -4,7 +4,12 @@ git submodule foreach --recursive
 cd Core
 git fetch origin
 git merge origin/main
+if ! git diff --quiet --exit-code;
+then
 git add .
 git commit -m "Update submodule to latest commit"
 git push origin main
-
+else
+	echo "No Changes in submodule Core"
+fi
+cd e/Git/Project
