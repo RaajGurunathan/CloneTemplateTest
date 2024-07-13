@@ -8,7 +8,7 @@ if ! git diff --quiet --exit-code;
 then
 git add .
 git commit -m "Update submodule to latest commit"
-if git push -u origin main;
+if git push origin main;
 	echo "Submodule core is updated successfully"
 else
 	echo "Failed to push in Core"
@@ -17,3 +17,4 @@ else
 	echo "No Changes in submodule Core"
 fi
 cd e/Git/Project
+read -rp "Press Enter to Exit..."
