@@ -1,5 +1,4 @@
 #!/bin/bash
-cd e/Git/Project
 git submodule foreach --recursive git pull origin main
 if ! git diff --quiet --exit-code; then
 	git add .
