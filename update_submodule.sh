@@ -1,6 +1,6 @@
 #!/bin/bash
 git submodule foreach --recursive git pull origin main
-if !git diff --quiet --exit-code; then
+if ! git diff --quiet --exit-code; then
 	git add .
 	git commit -m "Update submodule to latest commit"
 	if git push origin main; then
