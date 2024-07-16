@@ -22,7 +22,7 @@ jobs:
 
     - name: Update submodule
       run: |
-        git submodule update --recursive --remote
+        git submodule update --remote --merge
     - name: Commit and push changes
       run: |
         git add .
