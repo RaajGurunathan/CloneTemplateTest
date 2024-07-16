@@ -1,0 +1,32 @@
+name: Update Submodule
+
+on:
+  repository_dispatch:
+    types: [update_submodule]
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout main repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GIT_TOKEN }}
+        submodules: true  # Checkout submodules as well
+
+    - name: Configure git
+      run: |
+        git config --global user.name 'Rajkumar-Gurunathan-Gilead'
+        git config --global user.email 'rajkumar.gurunathan90@github.com'
+
+    - name: Update submodule
+      run: |
+        git submodule update --recursive --remote
+    - name: Commit and push changes
+      run: |
+        git add .
+        git commit -m 'Update submodule to latest commit'
+        git push origin HEAD:${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
