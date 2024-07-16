@@ -24,9 +24,15 @@ jobs:
       run: |
         git submodule sync
         git submodule update --init --recursive --force
+        cd Core
+        git fetch origin
+        git reset --hard origin/main
         git status
+        cd ..
+        if ! git diff --quiet --exit-code; then
           git add .
           git commit -m 'Update submodule to latest commit'
           git push origin HEAD:${{ github.ref }} 
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
