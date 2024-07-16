@@ -22,8 +22,7 @@ jobs:
 
     - name: Update submodule
       run: |
-        git submodule update --init --recursive
-        git pull origin main
+        git submodule update --remote --merge --allow-unrelated-histories 
     - name: Commit and push changes
       run: |
         git add .
