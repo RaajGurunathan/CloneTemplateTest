@@ -25,7 +25,7 @@ jobs:
         git submodule update --remote --merge
         cd Core
         git fetch origin
-        git merge origin/main --allow-unrelated-histories
+        git merge origin/main --allow-unrelated-histories --force
     - name: Commit and push changes
       run: |
         git add .
