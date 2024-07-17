@@ -25,14 +25,15 @@ jobs:
           git submodule sync
           git submodule update --init --recursive --force
       
-    - name: Fetch Latest Change for submodule
-      run: git fetch --all 
     - name: Reset submodule to latest remote state on main branch
-      run: git reset --hard origin/main
+      run: |
+          cd Core
+          git fetch --all 
+          git reset --hard origin/main
     - name: Commit and Push Changes if any
       run: |
           git add .
-          git commit -m "Update submodule to latest commit" || echo "No commit to Change"
+          git commit -m "Updates submodule to latest commit" || echo "No commit to Change"
           git push origin HEAD:${{ github.ref }} 
     env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
