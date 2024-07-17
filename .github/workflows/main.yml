@@ -27,10 +27,10 @@ jobs:
       
     - name: Reset submodule to latest remote state on main branch
       run: |
-          cd $path
+          cd Core
           git fetch --all 
           git reset --hard origin/main
-          cd $toplevel
+          cd ..
     - name: Commit and Push Changes if any
       run: |
           git add .
