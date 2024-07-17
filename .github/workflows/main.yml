@@ -1,25 +1,40 @@
-name: Trigger Main Repo Update
+name: Update Submodule
 
 on:
-  push:
-    branches:
-      - main  # Change this to the branch you want to track
+  repository_dispatch:
+    types: [update_submodule]
 
 jobs:
-  trigger-update:
+  update-submodule:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set PAT Token based on Commiter 
-      id: set-pat 
+    - name: Checkout main repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GIT_TOKEN }}
+        submodules: recursive  
+        
+    - name: Configure git
       run: |
-        COMMIT_AUTHOR=$(git log -1 --pretty=format:'%ae')
-        if COMMIT_AUTHOR == "abc@gmail.com"; then
-            echo "::set-output name=pat::${{secrets.GIT_TOKEN}}"
-        fi
-    - name: Trigger workflow in main repository
+        git config --global user.name 'RaajGurunathan'
+        git config --global user.email 'rajkumar.gurunathan90@gmail.com'
+        
+    - name: Initialize submodule
       run: |
-        curl -X POST -H "Authorization: token ${{steps.set-pat.outputs.pat}}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/RaajGurunathan/Project/dispatches \
-          -d '{"event_type":"update_submodule"}'
+          git submodule sync
+          git submodule update --init --recursive
+      
+    - name: Reset submodule to latest remote state on main branch
+      run: |
+          cd Core
+          git fetch --all 
+          git reset --hard origin/main
+          cd ..
+    - name: Commit and Push Changes if any
+      run: |
+          git add .
+          git commit -m "Submodule updated to latest commit from Remote" || echo "No commit to Change"
+          git push origin HEAD:${{ github.ref }} 
+    env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
