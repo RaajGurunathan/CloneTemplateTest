@@ -27,7 +27,7 @@ jobs:
       
     - name: Reset submodule to latest remote state on main branch
       run: |
-          cd $toplevel/$path
+          cd $path
           git fetch --all 
           git reset --hard origin/main
           cd $toplevel
