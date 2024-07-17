@@ -19,7 +19,7 @@ jobs:
       run: git submodule update --init --recursive
       
     - name: Fetch Latest Change for submodule
-      run: git fetch -all 
+      run: git fetch --all 
     - name: Reset submodule to latest remote state on main branch
       run: git reset --hard origin/main
     - name: Commit and Push Changes if any
