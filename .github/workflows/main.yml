@@ -13,6 +13,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: RaajGurunathan/Project
+        path: Project
         submodules: recursive  
         
     - name: Initialize submodule
@@ -33,6 +34,7 @@ jobs:
         
     - name: Commit and Push Changes if any
       run: |
+          cd Project
           git add .
           git commit -m "Submodule updated to latest commit from Remote" || echo "No commit to Change"
           git push origin HEAD:${{ github.ref }} 
