@@ -18,12 +18,13 @@ jobs:
         
     - name: Initialize submodule
       run: |
+          cd Project
           git submodule sync
           git submodule update --init --recursive
       
     - name: Reset submodule to latest remote state on main branch
       run: |
-          cd Core
+          cd Project/Core
           git fetch --all 
           git reset --hard origin/main
           cd ..
