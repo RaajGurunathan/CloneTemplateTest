@@ -23,10 +23,10 @@ jobs:
     - name: Retrive User Details
       run: | 
           user_name=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
-          user_login=$(echo $user_name | jq -r '.login') >> $GITHUB_ENV
+          echo "user_login=$(echo $user_name | jq -r '.login')" >> $GITHUB_ENV
           
           user_email=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user/emails)
-          user_login_email=$(echo $user_email | jq -r '.[0].email') >> $GITHUB_ENV
+          echo "user_login_email=$(echo $user_email | jq -r '.[0].email')" >> $GITHUB_ENV
           
     - name: Configure git
       run: |
