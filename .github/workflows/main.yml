@@ -26,7 +26,7 @@ jobs:
           user_login=$(echo $user_name | jq -r '.login') >> $GITHUB_ENV
           
           user_email=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user/emails)
-          echo "user_login_email=$(echo $user_email | jq -r '.[0].email')" >> $GITHUB_ENV
+          user_login_email=$(echo $user_email | jq -r '.[0].email') >> $GITHUB_ENV
           
     - name: Configure git
       run: |
