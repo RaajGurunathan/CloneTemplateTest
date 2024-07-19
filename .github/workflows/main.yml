@@ -27,7 +27,7 @@ jobs:
     - name: Configure git
       run: |
         git config --global user.name "${{ env.user_login }}"
-        git config --global user.email ${{ env.user_email }}"
+        git config --global user.email "${{ env.user_email }}"
         
     - name: Initialize submodule
       run: |
