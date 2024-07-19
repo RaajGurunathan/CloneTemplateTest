@@ -14,8 +14,10 @@ jobs:
       with:
         token: ${{ secrets.GIT_TOKEN }}
         submodules: recursive  
+
     - name: Retrive User Details
       run: |
+          sudo apt-get install -y jq
           response = $(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
           echo "user_login"=$(echo $response | jq -r '.login')" >> $GITHUB_ENV
           
