@@ -19,13 +19,15 @@ jobs:
       run: |
           sudo apt-get update
           sudo apt-get install -y jq
-          user_response=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
-          echo "user_login=$(echo $user_response | jq -r '.login')" >> $GITHUB_ENV
+          user_name=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
+          echo "user_login=$(echo $user_name | jq -r '.login')" >> $GITHUB_ENV
+          user_email=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user/emails)
+          echo "user_login_email=$(echo $user_email | jq -r '.[0].email')" >> $GITHUB_ENV
           
     - name: Configure git
       run: |
         git config --global user.name "${{ env.user_login }}"
-        git config --global user.email 'rajkumar.gurunathan90@gmail.com'
+        git config --global user.email ${{ env.user_email }}"
         
     - name: Initialize submodule
       run: |
