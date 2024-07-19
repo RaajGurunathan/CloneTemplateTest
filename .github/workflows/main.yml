@@ -14,10 +14,14 @@ jobs:
       with:
         token: ${{ secrets.GIT_TOKEN }}
         submodules: recursive  
-
+    - name: Retrive User Details
+      run: |
+          response = $(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
+          echo "user_login"=$(echo $response | jq -r '.login')" >> $GITHUB_ENV
+          
     - name: Configure git
       run: |
-        git config --global user.name 'RaajGurunathan'
+        git config --global user.name "${{ env.user_login }}"
         git config --global user.email 'rajkumar.gurunathan90@gmail.com'
         
     - name: Initialize submodule
