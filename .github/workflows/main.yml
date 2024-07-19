@@ -14,12 +14,17 @@ jobs:
       with:
         token: ${{ secrets.GIT_TOKEN }}
         submodules: recursive  
-
-    - name: Retrive User Details
+        
+    - name: Install API response parser
       run: |
-          npm install -g yq         
+         sudo apt-get update
+         sudo apt-get install -y jq
+         
+    - name: Retrive User Details
+      run: | 
           user_name=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
-          echo "user_login=$(echo $user_name | jq -r '.login')" >> $GITHUB_ENV
+          user_login=$(echo $user_name | jq -r '.login') >> $GITHUB_ENV
+          
           user_email=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user/emails)
           echo "user_login_email=$(echo $user_email | jq -r '.[0].email')" >> $GITHUB_ENV
           
