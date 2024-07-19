@@ -20,7 +20,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq
           user_response=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
-          echo "user_login"=$(echo $user_response | jq -r '.login')" >> $GITHUB_ENV
+          echo "user_login=$(echo $user_response | jq -r '.login')" >> $GITHUB_ENV
           
     - name: Configure git
       run: |
