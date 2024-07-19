@@ -17,9 +17,11 @@ jobs:
 
     - name: Retrive User Details
       run: |
+          sudo apt-get update
           sudo apt-get install -y jq
-          response = $(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
-          echo "user_login"=$(echo $response | jq -r '.login')" >> $GITHUB_ENV
+          sudo pip install yq
+          user_response=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
+          echo "user_login"=$(echo $user_response | jq -r '.login')" >> $GITHUB_ENV
           
     - name: Configure git
       run: |
