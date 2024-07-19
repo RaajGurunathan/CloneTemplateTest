@@ -44,5 +44,10 @@ jobs:
           git fetch --all 
           git reset --hard origin/main
           cd ..
+    - name: Commit and Push Changes if any
+      run: |
+          git add .
+          git commit -m "Submodule updated to latest commit from Remote" || echo "No commit to Change"
+          git push origin HEAD:${{ github.ref }} 
     env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
