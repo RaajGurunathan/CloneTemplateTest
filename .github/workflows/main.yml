@@ -30,5 +30,5 @@ jobs:
           repo: context.repo.repo,
           title: "Submodule Update Notification",
           body: "Submodule update has been detected with commit details. Commit ID is: {{ $COMMIT_ID }} and 
-          Commit Message is: {{ COMMIT_MESSAGE }}",
+          Commit Message is: {{ $COMMIT_MESSAGE }}",
           labels:["Notification"]});
