@@ -5,49 +5,19 @@ on:
     types: [update_submodule]
 
 jobs:
-  update-submodule:
+  notify:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout main repository
-      uses: actions/checkout@v3
+    - name: Create Notification Issue
+      uses: actions/github-script@v6
       with:
-        token: ${{ secrets.GIT_TOKEN }}
-        submodules: recursive  
-        
-    - name: Install API response parser
-      run: |
-         sudo apt-get update
-         sudo apt-get install -y jq
-         
-    - name: Retrive User Details
-      run: | 
-          user_name=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user)
-          echo "user_login=$(echo $user_name | jq -r '.login')" >> $GITHUB_ENV
-          
-          user_email=$(curl -s -H "Authorization: token ${{ secrets.GIT_TOKEN }}" https://api.github.com/user/emails)
-          echo "user_login_email=$(echo $user_email | jq -r '.[0].email')" >> $GITHUB_ENV
-          
-    - name: Configure git
-      run: |
-        git config --global user.name "${{ env.user_login }}"
-        git config --global user.email "${{ env.user_email }}"
-        
-    - name: Initialize submodule
-      run: |
-          git submodule sync
-          git submodule update --init --recursive
-      
-    - name: Reset submodule to latest remote state on main branch
-      run: |
-          cd Core
-          git fetch --all 
-          git reset --hard origin/main
-          cd ..
-    - name: Commit and Push Changes if any
-      run: |
-          git add .
-          git commit -m "Submodule updated to latest commit from Remote" || echo "No commit to Change"
-          git push origin HEAD:${{ github.ref }} 
-    env:
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        script: |
+         const { context } = require('@actions/github');
+         const octokit = require('@octokit/rest')();
+         await octokit.issues.create({
+         owner: context.repo.owner,
+         repo: context.repo.repo,
+         title: "Submodule Update Notification",
+         body: "Submodule update has been detected.",
+         labels:["Notification"]});
