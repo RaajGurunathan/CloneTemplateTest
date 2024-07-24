@@ -2,7 +2,6 @@ name: Create Notification
 
 on:
   repository_dispatch:
-    types: [update_submodule]
 
 permissions:
   issues: write
@@ -12,6 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout main repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Get Latest Commit Details of Submodule
+      run: |
+          cd Core
+          COMMIT_ID=$(git rev-parse HEAD)
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
+          
     - name: Create Notification Issue
       uses: actions/github-script@v6
       with:
@@ -20,5 +29,6 @@ jobs:
           owner: context.repo.owner,
           repo: context.repo.repo,
           title: "Submodule Update Notification",
-          body: "Submodule update has been detected.",
+          body: "Submodule update has been detected with commit details. Commit ID is: {{ $COMMIT_ID }} and 
+          Commit Message is: {{ COMMIT_MESSAGE }}",
           labels:["Notification"]});
