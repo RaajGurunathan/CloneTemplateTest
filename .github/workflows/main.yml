@@ -22,5 +22,3 @@ jobs:
           title: "Submodule Update Notification",
           body: "Submodule update has been detected.",
           labels:["Notification"]});
-      env: 
-        GITHUB_TOKEN: $ {{ secrets.GIT_TOKEN }}
