@@ -34,6 +34,7 @@ jobs:
     - name: Get Latest Commit Details of Submodule
       run: |
           cd Core
+          git checkout main
           echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
           echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)" >> $GITHUB_ENV
           
@@ -42,9 +43,7 @@ jobs:
       with:
         script: |
           const commit_id = process.env.COMMIT_ID;
-          console.log("COMMIT ID is: " commit_id);
           const commit_message = process.env.COMMIT_MESSAGE;
-          console.log("COMMIT_MESSAGE is: " commit_message);
           await github.rest.issues.create({
           owner: context.repo.owner,
           repo: context.repo.repo,
