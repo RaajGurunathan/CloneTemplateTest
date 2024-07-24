@@ -50,4 +50,5 @@ jobs:
           repo: context.repo.repo,
           title: "Submodule Update Notification",
           body: "Submodule update has been detected with commit details.",
-          labels:["Notification"]});
+          labels:["Notification"]
+          });
