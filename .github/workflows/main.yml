@@ -34,7 +34,6 @@ jobs:
         
     - name: Get Latest Commit Details of Submodule
       run: |
-          git submodule update --init --recursive
           cd Core
           git checkout main
           git pull origin main
