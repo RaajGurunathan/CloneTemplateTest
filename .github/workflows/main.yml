@@ -42,11 +42,12 @@ jobs:
       with:
         script: |
           const commit_id = process.env.COMMIT_ID;
+          console.log("COMMIT ID is: " commit_id);
           const commit_message = process.env.COMMIT_MESSAGE;
+          console.log("COMMIT_MESSAGE is: " commit_message);
           await github.rest.issues.create({
           owner: context.repo.owner,
           repo: context.repo.repo,
           title: "Submodule Update Notification",
-          body: "Submodule update has been detected with commit details. Commit ID is message: ${commit_id} and 
-          Commit Message is message: ${commit_message}",
+          body: "Submodule update has been detected with commit details.",
           labels:["Notification"]});
