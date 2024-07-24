@@ -14,7 +14,7 @@ jobs:
       with:
         script: |
          const github = require('@actions/github');
-         const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+         const octokit = github.getOctokit(process.env.GIT_TOKEN);
          await octokit.issues.create({
          owner: github.context.repo.owner,
          repo: github.context.repo.repo,
@@ -22,4 +22,4 @@ jobs:
          body: "Submodule update has been detected.",
          labels:["Notification"]});
       env:
-       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
+       GITHUB_TOKEN: ${{secrets.GIT_TOKEN }}
