@@ -48,6 +48,6 @@ jobs:
           owner: context.repo.owner,
           repo: context.repo.repo,
           title: "Submodule Update Notification",
-          body: "Submodule update has been detected with commit details." + commit_id +","+ commit_message +"",
+          body: "Submodule update has been detected with latest Commit_ID: " + commit_id +" Commit_Message"+ commit_message +"",
           labels:["Notification"]
           });
