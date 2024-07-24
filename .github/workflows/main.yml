@@ -13,9 +13,9 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-         await github.rest.issues.create({
-          owner: github.context.repo.owner,
-          repo: github.context.repo.repo,
+          await github.rest.issues.create({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
           title: "Submodule Update Notification",
           body: "Submodule update has been detected.",
           labels:["Notification"]});
