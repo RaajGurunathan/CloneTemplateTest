@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types: [update_submodule]
 
+permissions:
+  issues: write
+  
 jobs:
   notify:
     runs-on: ubuntu-latest
