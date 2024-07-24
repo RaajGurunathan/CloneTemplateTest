@@ -33,6 +33,7 @@ jobs:
         
     - name: Get Latest Commit Details of Submodule
       run: |
+          git submodule sync
           cd Core
           git checkout main
           echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
