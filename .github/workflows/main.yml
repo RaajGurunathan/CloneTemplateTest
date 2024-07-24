@@ -34,17 +34,19 @@ jobs:
     - name: Get Latest Commit Details of Submodule
       run: |
           cd Core
-          COMMIT_ID=$(git rev-parse HEAD)
-          COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
+          echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)" >> $GITHUB_ENV
           
     - name: Create Notification Issue
       uses: actions/github-script@v6
       with:
         script: |
+          const commit_id = process.env.COMMIT_ID;
+          const commit_message = process.env.COMMIT_MESSAGE;
           await github.rest.issues.create({
           owner: context.repo.owner,
           repo: context.repo.repo,
           title: "Submodule Update Notification",
-          body: "Submodule update has been detected with commit details. Commit ID is: {{ $COMMIT_ID }} and 
-          Commit Message is: {{ $COMMIT_MESSAGE }}",
+          body: "Submodule update has been detected with commit details. Commit ID is message: ${commit_id} and 
+          Commit Message is message: ${commit_message}",
           labels:["Notification"]});
