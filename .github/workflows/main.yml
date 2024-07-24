@@ -1,4 +1,4 @@
-name: Update Submodule
+name: Create Notification
 
 on:
   repository_dispatch:
